@@ -1,1 +1,4 @@
-
+scipy
+pandas
+requests
+xmltodict
