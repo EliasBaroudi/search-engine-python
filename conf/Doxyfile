@@ -35,3 +35,7 @@ UML_LOOK               = YES
 # Set to YES to include graph in the output
 CALL_GRAPH             = YES
 CALLER_GRAPH           = YES
+
+JAVADOC_AUTOBRIEF = YES
+OPTIMIZE_OUTPUT_PYTHON = YES
+PYTHON_DOCSTRING = YES
