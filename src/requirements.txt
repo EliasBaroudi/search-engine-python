@@ -1,4 +1,0 @@
-scipy
-pandas
-requests
-xmltodict
