@@ -3,14 +3,14 @@
 # =============== CLASSE CVE ===============
 
 class CVE:
-    """
+    """!
     @class CVE
     @brief Cette classe régie le fonctionnement d'une CVE
     
     """
 
     def __init__(self, cveID="", dateAdded="", notes="", nvdData=None, product="", shortDescription="", vulnerabilityName=""):
-        """
+        """!
         @brief Initialise l'objet CVE.
 
         @param nom : Nom du corpus à définir.
@@ -34,13 +34,13 @@ class CVE:
         self.vulnerabilityName = vulnerabilityName
             
     def __str__(self):
-        """
+        """!
         @brief Donne une representation de l'objet CVE (son ID ainis que son nom de vulnérabilité)     
         """
         return f"CVE ID: {self.cveID}\nVulnerability Name: {self.vulnerabilityName}"
     
     def getType(self):
-        """
+        """!
         @brief Donne le type de l'objet
         """
         return 'CVE'
@@ -49,13 +49,13 @@ class CVE:
 # Classe reprise de la correction des TDs
 
 class ArxivDocument:
-    """
+    """!
     @class CVE
     @brief Cette classe régie le fonctionnement d'un document Arxiv
     """
 
     def __init__(self, titre="", auteur="", date="", url="", texte="",co_auteurs=""):
-        """
+        """!
         @brief Initialise la CVE.
         
         @param titre : Nom du corpus à definir.
@@ -76,19 +76,19 @@ class ArxivDocument:
         self.co_auteurs = co_auteurs  
 
     def getCoAuteurs(self):
-        """
+        """!
         @brief Retourne les auteurs  
         """
         return self.co_auteurs
     
     def setCoAuteurs(self,co_auteurs=0):
-        """
+        """!
         @brief Defini les co-auteurs
         """
         self.nbcom = co_auteurs
 
     def __str__(self):
-        """
+        """!
         @brief Representation textuelle de l'objet  
         """
         return f"{self.titre}, par {self.auteur}, co-Auteurs : {self.co_auteurs}, source : {self.getType()}"
@@ -108,7 +108,7 @@ from numpy.linalg import norm
 import pandas as pd
 
 class SearchingEngine:
-    """
+    """!
     @class SearchingEngine
 
     @brief Classe moteur de l'application, permet de faire des opérations sur le corpus
@@ -119,7 +119,7 @@ class SearchingEngine:
     """
 
     def __init__(self, corpus):
-        """
+        """!
         @brief Initialise le moteur de recherche.
         
         @param corpus : Nom du corpus à utiliser.
@@ -204,19 +204,19 @@ class SearchingEngine:
         self.mat_TFIDF = csr_matrix((__data, (__rows, __cols)), shape=(num_doc, num_mot))
 
     def getTF(self):
-        """
+        """!
         @brief Retourne la matrice TF
         """
         return self.mat_TF
     
     def getTFIDF(self):
-        """
+        """!
         @brief Retourne la matrice TFxIDF
         """
         return self.mat_TFIDF
 
     def search(self, mots, nb):
-        """
+        """!
         @brief Fonction de recherche 
 
         @brief Fonction de recherche

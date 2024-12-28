@@ -1,4 +1,4 @@
-"""
+"""!
 @file main.py
 @brief Script principal de l'application.
 

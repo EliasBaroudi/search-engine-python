@@ -17,7 +17,7 @@ import xmltodict
 
 class Corpus:
 
-    """
+    """!
     @class Corpus
     @brief Cette classe régie le fonctionnement du corpus
     
@@ -28,7 +28,7 @@ class Corpus:
     """
 
     def __init__(self, nom):
-        """
+        """!
         @brief Initialise le corpus.
         
         @param nom : Nom du corpus à definir.
@@ -44,7 +44,7 @@ class Corpus:
 
     def add(self, doc):
 
-        """
+        """!
         @brief Ajoute les CVE au corpus.
         
         @param doc : Represente la réference à l'objet CVE.
@@ -84,7 +84,7 @@ class Corpus:
 
     def show(self, n_docs=-1, tri="abc"):
 
-        """
+        """!
         @brief Permet d'afficher le corpus.
         
         @param n_docs (-1 par défaut) : Nombre de documents à afficher.
@@ -103,7 +103,7 @@ class Corpus:
 
     def __repr__(self):
 
-        """
+        """!
         @brief Representation du corpus
         
         Affiche l'id de la CVE ainsi que les liens trouvés sur Arxiv
@@ -124,14 +124,14 @@ class Corpus:
 # ============== GETTERS =======================
 
     def getNdoc(self):
-        """
+        """!
         @brief Getter du nombre de CVE
     
         """
         return self.ndoc
     
     def getCve(self):
-        """
+        """!
         @brief Getter de la liste des CVE
     
         """
