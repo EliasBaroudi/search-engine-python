@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SearchingEngine Python: src/main.py File Reference</title>
+<title>SearchingEngine Python: main Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -60,80 +60,78 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
-</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">main.py File Reference</div>  </div>
+<div class="title">main Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Script principal de l'application.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:af27b4cb09aec4ec6b30aea42170f4bc8"><td class="memItemLeft" align="right" valign="top"><a id="af27b4cb09aec4ec6b30aea42170f4bc8"></a>
-list&#160;</td><td class="memItemRight" valign="bottom"><b>main.collection</b> = []</td></tr>
+list&#160;</td><td class="memItemRight" valign="bottom"><b>collection</b> = []</td></tr>
 <tr class="separator:af27b4cb09aec4ec6b30aea42170f4bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0578b4bfba08ce03e302408a0b5e2856"><td class="memItemLeft" align="right" valign="top"><a id="a0578b4bfba08ce03e302408a0b5e2856"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>main.page_number</b> = 2</td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>page_number</b> = 2</td></tr>
 <tr class="separator:a0578b4bfba08ce03e302408a0b5e2856"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee2a4b60a98416a125e4e07c534f2761"><td class="memItemLeft" align="right" valign="top"><a id="aee2a4b60a98416a125e4e07c534f2761"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>main.items_per_page</b> = 50</td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>items_per_page</b> = 50</td></tr>
 <tr class="separator:aee2a4b60a98416a125e4e07c534f2761"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abcde7c138279e684c4bf07a6d5c2a5e7"><td class="memItemLeft" align="right" valign="top"><a id="abcde7c138279e684c4bf07a6d5c2a5e7"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.response</b> = requests.get(f'https://kevin.gtfkd.com/kev?page={page_number}&amp;per_page={items_per_page}')</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>response</b> = requests.get(f'https://kevin.gtfkd.com/kev?page={page_number}&amp;per_page={items_per_page}')</td></tr>
 <tr class="separator:abcde7c138279e684c4bf07a6d5c2a5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5432c46e804beb3ef271527dd5116d64"><td class="memItemLeft" align="right" valign="top"><a id="a5432c46e804beb3ef271527dd5116d64"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.data_vuln</b> = response.json()</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>data_vuln</b> = response.json()</td></tr>
 <tr class="separator:a5432c46e804beb3ef271527dd5116d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad354a7e47f97936f37000bb3b8e5360f"><td class="memItemLeft" align="right" valign="top"><a id="ad354a7e47f97936f37000bb3b8e5360f"></a>
-list&#160;</td><td class="memItemRight" valign="bottom"><b>main.cves</b> = []</td></tr>
+list&#160;</td><td class="memItemRight" valign="bottom"><b>cves</b> = []</td></tr>
 <tr class="separator:ad354a7e47f97936f37000bb3b8e5360f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19b5f6648d933bf5fc141b823ae4d85b"><td class="memItemLeft" align="right" valign="top"><a id="a19b5f6648d933bf5fc141b823ae4d85b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.cveID</b> = cve['cveID']</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>cveID</b> = cve['cveID']</td></tr>
 <tr class="separator:a19b5f6648d933bf5fc141b823ae4d85b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae41d548ecfc14c48644ec864150598e1"><td class="memItemLeft" align="right" valign="top"><a id="ae41d548ecfc14c48644ec864150598e1"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.dateAdded</b> = cve['dateAdded']</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>dateAdded</b> = cve['dateAdded']</td></tr>
 <tr class="separator:ae41d548ecfc14c48644ec864150598e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d92705ce7f5029d97e176b460c8c49e"><td class="memItemLeft" align="right" valign="top"><a id="a1d92705ce7f5029d97e176b460c8c49e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.notes</b> = cve['notes']</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>notes</b> = cve['notes']</td></tr>
 <tr class="separator:a1d92705ce7f5029d97e176b460c8c49e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49e1132bb032355f9a706ec5123b8039"><td class="memItemLeft" align="right" valign="top"><a id="a49e1132bb032355f9a706ec5123b8039"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.nvdData</b> = cve['nvdData']</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>nvdData</b> = cve['nvdData']</td></tr>
 <tr class="separator:a49e1132bb032355f9a706ec5123b8039"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b41dcb5b5341f04d524da6a10bacfd5"><td class="memItemLeft" align="right" valign="top"><a id="a6b41dcb5b5341f04d524da6a10bacfd5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.product</b> = cve['product']</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>product</b> = cve['product']</td></tr>
 <tr class="separator:a6b41dcb5b5341f04d524da6a10bacfd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafd00c685108740c6e77946468faa075"><td class="memItemLeft" align="right" valign="top"><a id="aafd00c685108740c6e77946468faa075"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.shortDescription</b> = cve['shortDescription']</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>shortDescription</b> = cve['shortDescription']</td></tr>
 <tr class="separator:aafd00c685108740c6e77946468faa075"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f547fc5bd3ca945b900dd2a09dad485"><td class="memItemLeft" align="right" valign="top"><a id="a9f547fc5bd3ca945b900dd2a09dad485"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.vulnerabilityName</b> = cve['vulnerabilityName']</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>vulnerabilityName</b> = cve['vulnerabilityName']</td></tr>
 <tr class="separator:a9f547fc5bd3ca945b900dd2a09dad485"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fefb9db2af3db46803f63e68e208620"><td class="memItemLeft" align="right" valign="top"><a id="a6fefb9db2af3db46803f63e68e208620"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.cve_classe</b> = <a class="el" href="classCVE.html">CVE</a>(cveID, dateAdded, notes, nvdData, product, shortDescription, vulnerabilityName)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>cve_classe</b> = <a class="el" href="classClasses_1_1CVE.html">CVE</a>(cveID, dateAdded, notes, nvdData, product, shortDescription, vulnerabilityName)</td></tr>
 <tr class="separator:a6fefb9db2af3db46803f63e68e208620"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f9430e342bbb0c086a97bbeb31101c6"><td class="memItemLeft" align="right" valign="top"><a id="a6f9430e342bbb0c086a97bbeb31101c6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.corpus</b> = <a class="el" href="classCorpus.html">Corpus</a>(&quot;Corpus&quot;)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>corpus</b> = <a class="el" href="classCorpus_1_1Corpus.html">Corpus</a>(&quot;Corpus&quot;)</td></tr>
 <tr class="separator:a6f9430e342bbb0c086a97bbeb31101c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07df3668fdca9907edd23cd725330c50"><td class="memItemLeft" align="right" valign="top"><a id="a07df3668fdca9907edd23cd725330c50"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.search</b> = <a class="el" href="classSearchingEngine.html">SearchingEngine</a>(corpus)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>search</b> = <a class="el" href="classClasses_1_1SearchingEngine.html">SearchingEngine</a>(corpus)</td></tr>
 <tr class="separator:a07df3668fdca9907edd23cd725330c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Script principal de l'application. </p>
-<p>Ce fichier permet la création de nos objets <a class="el" href="classCVE.html" title="Cette classe régie le fonctionnement d&#39;une CVE.">CVE</a> ainsi que de notre corpus. Dans un premier temps, nous recherchons les <a class="el" href="classCVE.html" title="Cette classe régie le fonctionnement d&#39;une CVE.">CVE</a> les plus connues à l'aide de l'API Kevin. Ensuite, nous créons le corpus à partir de ces <a class="el" href="classCVE.html" title="Cette classe régie le fonctionnement d&#39;une CVE.">CVE</a>. Enfin, nous sollicitons le moteur de recherche avec une requête contenant des mots clés.</p>
-<dl class="section author"><dt>Author</dt><dd>BAROUDI Elias &amp; GHALMI Nassim </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>28/12/2024 </dd></dl>
-<dl class="section version"><dt>Version</dt><dd>v2 </dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"><pre class="fragment">@file main.py
+@brief Script principal de l'application.
+
+Ce fichier permet la création de nos objets CVE ainsi que de notre corpus.
+Dans un premier temps, nous recherchons les CVE les plus connues à l'aide de l'API Kevin.
+Ensuite, nous créons le corpus à partir de ces CVE.
+Enfin, nous sollicitons le moteur de recherche avec une requête contenant des mots clés.
+
+@author BAROUDI Elias &amp; GHALMI Nassim
+@date 28/12/2024
+@version v2</pre> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
