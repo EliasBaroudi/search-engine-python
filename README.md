@@ -48,19 +48,19 @@ $ python3 interface.py
 
 Une fois l'application lancée, le terminal affichera une adresse locale, sur laquelle est hebergée l'application.
 
-<img src="screenshots/terminal.png" alt="Terminal" width="300"/>
+<img src="screenshots/terminal.png" alt="Terminal" width="1100"/>
 
 - Utilisation de l'interface :
 
 ** Zone de recherche **  
 Voici un aperçu de la zone de recherche. L'utilisateur peut spécifier le nombre de documents à retourner, saisir des mots-clés, puis lancer la recherche en cliquant sur le bouton "Rechercher".
 
-<img src="screenshots/main.png" alt="Main" width="300"/>
+<img src="screenshots/main.png" alt="Main" width="1100"/>
 
 ** Consulter les resultats **  
 Voici un aperçu de l'interface après l'exécution d'une recherche. Elle affiche les différentes CVE jugées pertinentes en fonction des critères de recherche, avec les informations suivantes : le score de pertinence, le nom de la CVE, son ID, des liens vers des informations détaillées sur la CVE, ainsi que les articles scientifiques associés à la vulnérabilité.
 
-<img src="screenshots/search.png" alt="Main" width="300"/>
+<img src="screenshots/search.png" alt="Main" width="1100"/>
 
 ## Considérations :
 
