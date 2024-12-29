@@ -121,5 +121,5 @@ def test_search_engine_search(sample_search_engine): # Test pour la recherche
     results = sample_search_engine.search("test vulnerability", 2)
     assert isinstance(results, pd.DataFrame) # On verifie que le résultat est bien un DataFrame
     assert len(results) <= 2 # Qu'on a 2 ou plus résultats (2 documents)
-    assert all(col in results.columns for col in ['Document ID', 'Score', 'Description', 'CVE Link', 'Arxiv related']) # On verifie que les colonnes correspondent bien
+    assert all(col in results.columns for col in ['CVE ID', 'Name', 'Description', 'CVE Link', 'Arxiv related', 'Score']) # On verifie que les colonnes correspondent bien
                                                                                                                        # Prouvant que la fonction fonctionne correctement

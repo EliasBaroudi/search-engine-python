@@ -27,7 +27,7 @@ class CVE:
 
         self.cveID = cveID
         self.dateAdded = dateAdded
-        self.notes = notes
+        self.notes = '\n'.join(notes.split(';'))
         self.nvdData = nvdData if nvdData is not None else []
         self.product = product
         self.shortDescription = shortDescription
@@ -252,7 +252,8 @@ class SearchingEngine:
 
         # Normalisation du vecteur requette
         vect_norm = norm(vect)
-        vect = vect / vect_norm
+        if norm(vect) != 0:
+            vect = vect / vect_norm
 
         similarites = []
 
@@ -268,11 +269,12 @@ class SearchingEngine:
 
         for id, score in similarites[:nb]:
             res.append({
-                    'Document ID': id, 
-                    'Score': score,
+                    'CVE ID': self.list_doc[id].cveID, 
+                    'Name': self.list_doc[id].vulnerabilityName,
                     'Description': self.list_doc[id].shortDescription,
                     'CVE Link': self.list_doc[id].notes,
-                    'Arxiv related': self.corpus.link[self.list_doc[id].cveID] # Récupère les articles en lien avec la recherche calculés dans le corpus
+                    'Arxiv related': self.corpus.link[self.list_doc[id].cveID], # Recupération des liens aux articles arxiv correspondants
+                    'Score': score
             })
 
         return pd.DataFrame(res)

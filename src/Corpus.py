@@ -65,7 +65,7 @@ class Corpus:
         query = query[-3:]
         query = '+'.join(query).lower()
 
-        print(query)
+        # print(query)
         data = urllib.request.urlopen(f'http://export.arxiv.org/api/query?search_query=all:{query}+AND+cat:cs.CR&max_results=3')
         data = xmltodict.parse(data.read().decode('utf-8'))
 
@@ -77,7 +77,7 @@ class Corpus:
                        pdf.append( link["@href"] )  # Ajout du lien de l'article
             self.link[doc.cveID] = pdf
         except:
-            print('Aucun document trouvé')
+            # print('Aucun document trouvé')
             self.link[doc.cveID] = 'Aucun article'
 
 # =============== REPRESENTATION ===============
