@@ -38,7 +38,7 @@ $ pip install -r requirements.txt
 
 ## Utilisation
 
-Lancement de l'application :
+- Lancement de l'application :
 
 ```bash
 # Exemple d'exécution du projet
