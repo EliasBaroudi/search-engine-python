@@ -1,0 +1,183 @@
+/* styles.css */
+
+/* Ajout des polices dans le header */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* En-tête */
+.header-title {
+    font-weight: 600;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, #1a73e8, #0d47a1);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.header-subtitle {
+    font-size: 1.1rem;
+    color: #5f6368;
+}
+
+.header-container {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Zone de recherche */
+.search-input {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    border-color: #1a73e8;
+    outline: none;
+}
+
+/* Texte indicatif */
+.slider-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #5f6368;
+    font-size: 0.875rem;
+}
+
+/* Bouton 'Rechercher' */
+.search-button {
+    margin-top: 10px; 
+    margin-left: 20px;
+    padding: 12px 24px;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.search-button:hover {
+    background-color: #1557b0;
+    transform: translateY(-1px);
+}
+
+/* Style de la zone de recherche */
+.search-container {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Statistiques de recherche */
+.search-stats {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #5f6368;
+}
+
+/* Style de la carte */
+.result-card {
+    background-color: white;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e0e0e0;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.result-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* En-tête de la carte */
+.card-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 1rem;
+}
+
+/* ID de CVE */
+.cve-id {
+    margin-bottom: 0.5rem;
+    color: #000000;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+/* Nom de CVE */
+.cve-name {
+    color: #292929;
+    margin-top: 0;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Score */
+.score-badge {
+    background-color: #34a853;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Description */
+.description-section {
+    margin-top: 1rem;
+}
+
+/* Liens et références */
+.links-section {
+    display: flex;
+    gap: 2rem;
+}
+
+.link {
+    margin-top: 10px; 
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #1a73e8;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.link:hover {
+    color: #1557b0;
+    text-decoration: underline;
+}
+
+/* Traitement des erreurs */
+.error-message {
+    color: #d93025;
+    padding: 1rem;
+    background-color: #fce8e6;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+}
