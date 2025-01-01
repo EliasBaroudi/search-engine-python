@@ -46,7 +46,7 @@ app.layout = html.Div([
     # En-tête
     html.Div([
         html.H1("SecuPapers", className='header-title'),
-        html.P("Recherchez des vulnérabilités et des articles scientifiques associés", 
+        html.P("Recherchez des vulnérabilités avec leurs articles scientifiques associés", 
                className='header-subtitle')
     ], className='header-container'),
 
@@ -147,8 +147,8 @@ def execute_search(n_clicks, n_submit, text_value, slider_value):
                 ], className='card-header'),
                 
                 # Description
-                html.Div([
-                    html.Strong("Description:", className='description-title'),
+                html.Div(className='description', children=[
+                    html.Strong("Description :", className='description-title'),
                     html.P(result['Description'], className='description-text')
                 ]),
                 
@@ -157,7 +157,7 @@ def execute_search(n_clicks, n_submit, text_value, slider_value):
                     
                     #Liens CVE
                     html.Div([
-                        html.Strong("CVE Links:"),
+                        html.Strong("Liens CVE :"),
                         html.Div([
                             html.A(
                                 note.strip(),
@@ -170,7 +170,7 @@ def execute_search(n_clicks, n_submit, text_value, slider_value):
                     
                     #Liens Arxiv
                     html.Div([
-                        html.Strong("Articles Arxiv:"),
+                        html.Strong("Articles Arxiv :"),
                         html.Div(
                             [html.A(
                                 link,
