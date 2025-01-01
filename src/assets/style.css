@@ -115,7 +115,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* En-tête de la carte */
-.card-header {
+.card-header { 
     display: flex;
     align-items: center;
     border-bottom: 1px solid #e0e0e0;
@@ -149,6 +149,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Description */
+.description{
+    margin-top: 15px;
+}
+
 .description-section {
     margin-top: 1rem;
 }
