@@ -1,6 +1,6 @@
 ![banner](screenshots/banner.png)
 
-Projet réalisé dans le cadre de l'enseignement de spécialité Python. L'objectif était de développer un moteur de recherche capable de fournir une liste de documents pertinents en fonction d'une requête saisie par l'utilisateur.
+Le projet a été réalisé dans le cadre de l'enseignement de spécialité Python. L'objectif était de développer un moteur de recherche capable de fournir une liste de documents pertinents en fonction d'une requête saisie par l'utilisateur. Notre projet consiste à développer un outil permettant à l'utilisateur de rechercher une vulnérabilité connue, appelée CVE. Le moteur de recherche fournit lui-même les articles scientifiques associés à la vulnérabilité.
 
 ---
 
