@@ -79,7 +79,7 @@ Collaboration diagram for Corpus.Corpus:</div>
 <div class="dyncontent">
 <div class="center"><img src="classCorpus_1_1Corpus__coll__graph.png" border="0" usemap="#aCorpus_8Corpus_coll__map" alt="Collaboration graph"/></div>
 <map name="aCorpus_8Corpus_coll__map" id="aCorpus_8Corpus_coll__map">
-<area shape="rect" title=" " alt="" coords="5,5,121,244"/>
+<area shape="rect" title=" " alt="" coords="5,5,136,229"/>
 </map>
 </div>
 <table class="memberdecls">
@@ -89,8 +89,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aff7522f56f904154bedc196b88a9f3e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab04c9fd26d0bd511bbc0a4013b6b9b4d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCorpus_1_1Corpus.html#ab04c9fd26d0bd511bbc0a4013b6b9b4d">add</a> (self, doc)</td></tr>
 <tr class="separator:ab04c9fd26d0bd511bbc0a4013b6b9b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac77cfaa76acbf2eb947d0aa90aa47efd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCorpus_1_1Corpus.html#ac77cfaa76acbf2eb947d0aa90aa47efd">show</a> (self, n_docs=-1, tri=&quot;abc&quot;)</td></tr>
-<tr class="separator:ac77cfaa76acbf2eb947d0aa90aa47efd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5a4f64366e5abe69646fe50796e2ad5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCorpus_1_1Corpus.html#ae5a4f64366e5abe69646fe50796e2ad5">__repr__</a> (self)</td></tr>
 <tr class="separator:ae5a4f64366e5abe69646fe50796e2ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bbddbd246a97849f8f9e7edeba77e36"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCorpus_1_1Corpus.html#a6bbddbd246a97849f8f9e7edeba77e36">getNdoc</a> (self)</td></tr>
@@ -100,6 +98,9 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a82f5573530f07cd751bdb93ed04f3f99"><td class="memItemLeft" align="right" valign="top"><a id="a82f5573530f07cd751bdb93ed04f3f99"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>vulnerabilities</b></td></tr>
+<tr class="separator:a82f5573530f07cd751bdb93ed04f3f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77d860085b2560ba1d4c3b79cd707f73"><td class="memItemLeft" align="right" valign="top"><a id="a77d860085b2560ba1d4c3b79cd707f73"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>nom</b></td></tr>
 <tr class="separator:a77d860085b2560ba1d4c3b79cd707f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -112,9 +113,6 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a82cbb6d7826d8ec7aff73804b5e9fd09"><td class="memItemLeft" align="right" valign="top"><a id="a82cbb6d7826d8ec7aff73804b5e9fd09"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>date</b></td></tr>
 <tr class="separator:a82cbb6d7826d8ec7aff73804b5e9fd09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76a348e6f63ba5ec5d6c1df2833c220d"><td class="memItemLeft" align="right" valign="top"><a id="a76a348e6f63ba5ec5d6c1df2833c220d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>name</b></td></tr>
-<tr class="separator:a76a348e6f63ba5ec5d6c1df2833c220d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f7ab98fd49426e4b8b3fc7179e54594"><td class="memItemLeft" align="right" valign="top"><a id="a6f7ab98fd49426e4b8b3fc7179e54594"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>desc</b></td></tr>
 <tr class="separator:a6f7ab98fd49426e4b8b3fc7179e54594"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,7 +126,8 @@ Public Attributes</h2></td></tr>
 
 Cette classe permet de créer un corpus à partir des CVE fournies dans le script principal.
 Dans la création du corpus, une étape importante consiste à rechercher des documents sur arXiv.
-Elle utilise les trois derniers mots présents dans le titre de la CVE pour effectuer une recherche sur arXiv, dans la section Computer Science - Cryptography and Security.
+Elle utilise un dictionnaire de vulnérabilités pour effectuer une recherche sur arXiv, dans la section Computer Science - Cryptography and Security.
+Si un mot de la description de la CVE est présent dans le dictionnaire de vulnérabilités, on l'ajoute à la requête arXiv.
 Les articles liés aux CVE sont ensuite enregistrés dans un dictionnaire appelé link.
 </pre> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aff7522f56f904154bedc196b88a9f3e2"></a>
@@ -214,7 +213,8 @@ Affiche l'id de la CVE ainsi que les liens trouvés sur Arxiv
 @param doc : Represente la réference à l'objet CVE.
 
 Ajout des CVE au corpus.
-Recherche des articles correspondant à la vulnérabilité sur arXiv en utilisant les trois derniers mots du nom de la vulnérabilité.
+Recherche des articles correspondant à la vulnérabilité sur arXiv en utilisant les mots-clés de la description.
+La classe dispose d'une liste de mots-clés (vulnérabilités). En parcourant la description des CVE, si un mot est présent dans la liste de mots-clés, on l'ajoute à la requête envoyée sur arXiv.
 </pre> 
 </div>
 </div>
@@ -252,46 +252,6 @@ Recherche des articles correspondant à la vulnérabilité sur arXiv en utilisan
       </table>
 </div><div class="memdoc">
 <pre class="fragment">@brief Getter du nombre de CVE</pre> 
-</div>
-</div>
-<a id="ac77cfaa76acbf2eb947d0aa90aa47efd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac77cfaa76acbf2eb947d0aa90aa47efd">&#9670;&nbsp;</a></span>show()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def Corpus.Corpus.show </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>n_docs</em> = <code>-1</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>tri</em> = <code>&quot;abc&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">@brief Permet d'afficher le corpus.
-
-@param n_docs (-1 par défaut) : Nombre de documents à afficher.
-@param tri ("abc" par défaut) : Type de tri à faire (alphabétique ("abc") ou numérique ("123")).
-
-Utilisation de la fonction repr
-</pre> 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

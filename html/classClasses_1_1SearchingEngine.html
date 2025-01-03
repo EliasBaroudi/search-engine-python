@@ -91,8 +91,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a274d262565f274ca3bae5fbb7b967acd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56574f8d340e0cdf414f44b7b466ca95"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classClasses_1_1SearchingEngine.html#a56574f8d340e0cdf414f44b7b466ca95">getTFIDF</a> (self)</td></tr>
 <tr class="separator:a56574f8d340e0cdf414f44b7b466ca95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae943a8f36c901daa0e8870f5e553fd0e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classClasses_1_1SearchingEngine.html#ae943a8f36c901daa0e8870f5e553fd0e">search</a> (self, mots, nb)</td></tr>
-<tr class="separator:ae943a8f36c901daa0e8870f5e553fd0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c62e93e3eecc1adceaa6a6c582c1081"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classClasses_1_1SearchingEngine.html#a7c62e93e3eecc1adceaa6a6c582c1081">search</a> (self, mots, nb, source, only_link)</td></tr>
+<tr class="separator:a7c62e93e3eecc1adceaa6a6c582c1081"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -202,8 +202,8 @@ Enfin, nous parcourons une dernière fois le corpus pour calculer les valeurs ID
 </pre> 
 </div>
 </div>
-<a id="ae943a8f36c901daa0e8870f5e553fd0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae943a8f36c901daa0e8870f5e553fd0e">&#9670;&nbsp;</a></span>search()</h2>
+<a id="a7c62e93e3eecc1adceaa6a6c582c1081"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c62e93e3eecc1adceaa6a6c582c1081">&#9670;&nbsp;</a></span>search()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -224,7 +224,19 @@ Enfin, nous parcourons une dernière fois le corpus pour calculer les valeurs ID
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>nb</em>&#160;</td>
+          <td class="paramname"><em>nb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>only_link</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -239,6 +251,8 @@ Enfin, nous parcourons une dernière fois le corpus pour calculer les valeurs ID
 
 @param mots : chaîne de caractères contenant les mots saisis par l'utilisateur pour la recherche
 @param nb : nombre de documents à retourner
+@param source : contient la liste des sources choisies par l'utilisateur
+@only_link : booléen representant le choix de l'utilisateur concenrant les articles scientifiques
 
 @return pd.DataFrame(res) : DataFrame des CVE les plus pertinents
 
@@ -247,7 +261,8 @@ Elle crée un vecteur à partir des mots clés saisis en utilisant un vocabulair
 Ensuite, elle calcule le TF (Term Frequency) et l'IDF (Inverse Document Frequency) sur ce vecteur, puis normalise ce dernier.  
 La similarité cosinus est calculée entre le vecteur représentant les mots clés saisis par l'utilisateur et les vecteurs TFxIDF de chaque document.  
 Les similarités sont ensuite triées selon le score.  
-Enfin, les documents les plus pertinents sont retournés en fonction des identifiants présents dans le vecteur de similarité calculée.
+Ensuite, les documents les plus pertinents sont retournés en fonction des identifiants présents dans le vecteur de similarité calculée.
+Enfin, on renvoie les cve seulement si elles correspondent aux filtres.
 </pre> 
 </div>
 </div>

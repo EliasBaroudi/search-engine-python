@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['arxivdocument_18',['ArxivDocument',['../classClasses_1_1ArxivDocument.html',1,'Classes']]]
+  ['corpus_15',['Corpus',['../classCorpus_1_1Corpus.html',1,'Corpus']]]
 ];
