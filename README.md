@@ -54,6 +54,10 @@ Une fois l'application lancée, le terminal affichera une adresse locale, sur la
 
 ** Zone de recherche **  
 Voici un aperçu de la zone de recherche. L'utilisateur peut spécifier le nombre de documents à retourner, saisir des mots-clés, puis lancer la recherche en cliquant sur le bouton "Rechercher".
+L'utilisateur peut également filtrer les résultats :
+- Choisir les sources qui l'intéressent (NST, Kevin)
+- Choisir uniquement les documents pour lesquels un article scientifique a été trouvé
+
 
 <img src="screenshots/main.png" alt="Main" width="1100"/>
 
