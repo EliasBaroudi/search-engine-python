@@ -11,6 +11,89 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', sans-serif;
 }
 
+/* Styles de la section des filtres */
+.filter-section {
+    margin-top: 20px;
+    text-align: left;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.filter-label {
+    display: block;
+    margin-bottom: 12px;
+    color: #5f6368;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.filter-options {
+    display: flex;
+    gap: 20px;
+}
+
+/* Style personnalisé des cases à cocher */
+.checkbox-item {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #1a73e8;
+    border-radius: 4px;
+    margin-right: 8px;
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.checkbox-item:checked {
+    background-color: #1a73e8;
+    border-color: #1a73e8;
+}
+
+.checkbox-item:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checkbox-item:hover {
+    border-color: #1557b0;
+}
+
+.checkbox-label {
+    color: #3c4043;
+    font-size: 0.9rem;
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.checkbox-label:hover {
+    color: #1a73e8;
+}
+
+/* Ajustements responsifs */
+@media (max-width: 768px) {
+    .filter-section {
+        padding: 12px;
+    }
+    
+    .filter-options {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
 /* En-tête */
 .header-title {
     font-weight: 600;
@@ -136,6 +219,14 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
     font-weight: bold;
     font-size: 1.1rem;
+}
+
+.cve-source {
+    color: #585858;
+    margin-top: -25px;
+    font-weight:normal;
+    font-size: 0.8rem;
+    font-style: italic;
 }
 
 /* Score */
