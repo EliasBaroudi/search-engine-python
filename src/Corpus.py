@@ -11,6 +11,7 @@ def singleton(cls):
     return get_instance
 
 # =============== CLASSE CORPUS ===============
+# Inspiré de la correction fournie lors des TDs
 
 import urllib, urllib.request
 import xmltodict
@@ -23,7 +24,8 @@ class Corpus:
     
     Cette classe permet de créer un corpus à partir des CVE fournies dans le script principal.
     Dans la création du corpus, une étape importante consiste à rechercher des documents sur arXiv.
-    Elle utilise les trois derniers mots présents dans le titre de la CVE pour effectuer une recherche sur arXiv, dans la section Computer Science - Cryptography and Security.
+    Elle utilise un dictionnaire de vulnérabilités pour effectuer une recherche sur arXiv, dans la section Computer Science - Cryptography and Security.
+    Si un mot de la description de la CVE est présent dans le dictionnaire de vulnérabilités, on l'ajoute à la requête arXiv.
     Les articles liés aux CVE sont ensuite enregistrés dans un dictionnaire appelé link.
     """
 
@@ -33,12 +35,71 @@ class Corpus:
         
         @param nom : Nom du corpus à definir.
         """
-         
+
+        # Liste de mots clés pour detecter les mots perinents dans la description des CVE
+        self.vulnerabilities = [
+            "buffer",
+            "overflow"
+            "cross-site",
+            "scripting",
+            "xss",
+            "sql",
+            "injection",
+            "request",
+            "forgery",
+            "csrf",
+            "buffer",
+            "overflow",
+            "command",
+            "directory",
+            "traversal",
+            "broken",
+            "authentication",
+            "sensitive",
+            "data",
+            "exposure",
+            "security",
+            "misconfiguration",
+            "insecure",
+            "deserialization",
+            "xml",
+            "external",
+            "entities",
+            "xxe",
+            "server",
+            "side",
+            "ssrf",
+            "privileged",
+            "privilege",
+            "privileges",
+            "elevated",
+            "escalation",
+            "remote",
+            "code",
+            "commands",
+            "execute",
+            "execution",
+            "rce",
+            "path",
+            "denial",
+            "service",
+            "dos",
+            "mitm",
+            "weak",
+            "password",
+            "policies",
+            "clickjacking",
+            "session",
+            "fixation",
+            "insufficient",
+            "logging",
+            "monitoring"
+        ]
+
         self.nom = nom
         self.cve = {}
         self.link = {}
         self.date = ''
-        self.name = ''
         self.desc = ''
         self.ndoc = 0
 
@@ -50,22 +111,41 @@ class Corpus:
         @param doc : Represente la réference à l'objet CVE.
 
         Ajout des CVE au corpus.
-        Recherche des articles correspondant à la vulnérabilité sur arXiv en utilisant les trois derniers mots du nom de la vulnérabilité.
+        Recherche des articles correspondant à la vulnérabilité sur arXiv en utilisant les mots-clés de la description.
+        La classe dispose d'une liste de mots-clés (vulnérabilités). En parcourant la description des CVE, si un mot est présent dans la liste de mots-clés, on l'ajoute à la requête envoyée sur arXiv.
         """
-
+        
         self.date = doc.dateAdded
         self.desc = doc.shortDescription
-        self.name = doc.vulnerabilityName 
-        self.ndoc += 1 #Nombre de cve
-
+        
         self.cve[self.ndoc] = doc # Ajout des cve
+        self.ndoc += 1 # Nombre de cve incrémenté
         
         # Ajout des articles correspondant aux cve
-        query = self.name.split(' ')
-        query = query[-3:]
-        query = '+'.join(query).lower()
+        query = []
+        for char in [',','.']:
+            self.desc = self.desc.replace(char, "")
 
-        # print(query)
+        self.desc = self.desc.split(' ')
+
+        for word in self.desc:
+            if word.lower() in self.vulnerabilities:
+                query.append(word.lower())
+
+        query = '+'.join(query)
+        # On s'assure que la requete contient des mots
+        if len(query) != 0:
+            query += '+vulnerability'
+        else:
+            # Si jamais aucun mot n'a été jugé pertinent on prend les 3 derniers mots du nom de la vulnérabilité
+            if doc.getType() == 'KevinCVE': # Cela ne fonctionne uniquement si la CVE provient de l'api de Kevin
+                query = doc.vulnerabilityName.split(' ')
+                query = query[-3:]
+                query = '+'.join(query).lower()
+            else:
+                # On rend volontairement la requete obselète : puisque l'alogrtihme de récupération des mots perinents n'a pas fonctionné
+                query = '!?!?!?'
+
         data = urllib.request.urlopen(f'http://export.arxiv.org/api/query?search_query=all:{query}+AND+cat:cs.CR&max_results=3')
         data = xmltodict.parse(data.read().decode('utf-8'))
 
@@ -75,31 +155,16 @@ class Corpus:
                 for link in entry.get("link", []):
                     if link["@type"] == "application/pdf":
                        pdf.append( link["@href"] )  # Ajout du lien de l'article
-            self.link[doc.cveID] = pdf
+
+            # On s'assure que la CVE n'est pas déjà présente dans le dictionnaire
+            if doc.cveID not in self.link:
+                self.link[doc.cveID] = pdf
         except:
-            # print('Aucun document trouvé')
-            self.link[doc.cveID] = 'Aucun article'
+            # On s'assure que la CVE n'est pas déjà présente dans le dictionnaire
+            if doc.cveID not in self.link:
+                self.link[doc.cveID] = 'Aucun article'
 
 # =============== REPRESENTATION ===============
-
-    def show(self, n_docs=-1, tri="abc"):
-
-        """
-        @brief Permet d'afficher le corpus.
-        
-        @param n_docs (-1 par défaut) : Nombre de documents à afficher.
-        @param tri ("abc" par défaut) : Type de tri à faire (alphabétique ("abc") ou numérique ("123")).
-
-        Utilisation de la fonction repr
-        """
-
-        docs = list(self.cve.values())
-        if tri == "abc":  # Tri alphabétique
-            docs = list(sorted(docs, key=lambda x: x.vulnerabilityName.lower()))[:n_docs]
-        elif tri == "123":  # Tri temporel
-            docs = list(sorted(docs, key=lambda x: x.dateAdded))[:n_docs]
-
-        print("\n".join(list(map(repr, docs))))
 
     def __repr__(self):
 

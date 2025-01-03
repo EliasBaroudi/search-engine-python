@@ -6,7 +6,7 @@ import pandas as pd
 # Initialisations
 from main import *
 
-collection = init()
+collection = init(50) # On veut 50 CVE par API
 corpus = get_corpus(collection)
 search = get_engine(corpus)
 
@@ -41,7 +41,7 @@ app.index_string = '''
 </html>
 '''
 
-# Layout de l'application avec un style moderne
+# Layout de l'application
 app.layout = html.Div([
     # En-tête
     html.Div([
@@ -59,13 +59,11 @@ app.layout = html.Div([
                 type="text",
                 placeholder="Entrez des mots-clés de recherche...",
                 className='search-input'
-            ),
-            html.Div(id='search-feedback')
+            )
         ], style={'width': '60%', 'display': 'inline-block'}),
         
         # Selection du nombre de documents
         html.Div([
-
             # Texte indicatif
             html.Label(
                 "Nombre de résultats:",
@@ -90,7 +88,39 @@ app.layout = html.Div([
             id="bouton",
             n_clicks=0,
             className='search-button'
+        ),
+
+        # Zone des filtres
+        html.Div([
+        html.Label("Source:", className='filter-label'),
+        dcc.Checklist(
+            id='source-filters',
+            options=[
+                {'label': 'NST', 'value': 'NST'},
+                {'label': 'Kevin', 'value': 'Kevin'}
+            ],
+            value=['Kevin'],
+            className='filter-options',
+            inputClassName='checkbox-item',
+            labelClassName='checkbox-label'
         )
+        ], className='filter-section'),
+
+        # Filtre pour les articles scientifiques
+        html.Div([
+        html.Label("Articles:", className='filter-label'),
+        dcc.Checklist(
+            id='articles-filter',
+            options=[
+                {'label': 'Uniquement les CVE avec articles scientifiques', 'value': True}
+            ],
+            value=[],
+            className='filter-options',
+            inputClassName='checkbox-item',
+            labelClassName='checkbox-label'
+        )
+        ], className='filter-section')
+
     ], className='search-container'),
 
     # Statistiques de recherche
@@ -105,19 +135,20 @@ app.layout = html.Div([
 @app.callback(
     [Output('results-section', 'children'),
      Output('search-stats', 'children'),
-     Output('search-stats', 'style'),
-     Output('search-feedback', 'children')],
+     Output('search-stats', 'style')],
     [Input('bouton', 'n_clicks'),
      Input('champ_texte', 'n_submit')],
     [State('champ_texte', 'value'),
-     State('slider', 'value')]
+     State('slider', 'value'),
+     State('source-filters', 'value'),
+     State('articles-filter', 'value')]
 )
-def execute_search(n_clicks, n_submit, text_value, slider_value):
-    if (n_clicks == 0 and n_submit is None) or not text_value:  # Retourne vrai seulement si l'utilisateur n'a pas cliqué sur le bouton ou que le champ de texte est vide
-        return html.Div(), "", {'display': 'none'}, ""
+def execute_search(n_clicks, n_submit, text_value, slider_value, source_filters, articles_filter):
+    if (n_clicks == 0 and n_submit is None) or not text_value:
+        return html.Div(), "", {'display': 'none'}
     
     try:
-        results = search.search(text_value, slider_value).to_dict('records')
+        results = search.search(text_value, slider_value, source_filters, articles_filter).to_dict('records')
         
         stats_style = {
             'display': 'block'
@@ -127,16 +158,16 @@ def execute_search(n_clicks, n_submit, text_value, slider_value):
         result_cards = []
         for result in results:
             card = html.Div([
-
                 # En-tête de la carte
                 html.Div([
-
                     # Nom + ID
                     html.Div([
                         # ID de CVE
                         html.H3(result['CVE ID'], className='cve-id'),
                         # Nom de CVE
-                        html.H4(result['Name'], className='cve-name')
+                        html.H4(result['Name'], className='cve-name'),
+                        # Nom de la source
+                        html.H4(f"Source : {result['Source']}", className='cve-source'),
                     ], style={'flex': '1'}),
 
                     # Score
@@ -154,7 +185,6 @@ def execute_search(n_clicks, n_submit, text_value, slider_value):
                 
                 # Liens et références
                 html.Div([
-                    
                     #Liens CVE
                     html.Div([
                         html.Strong("Liens CVE :"),
@@ -164,7 +194,7 @@ def execute_search(n_clicks, n_submit, text_value, slider_value):
                                 href=note.strip(),
                                 target="_blank",
                                 className='link'
-                            ) for note in result['CVE Link'].split('\n') if note.strip() # Ajout des notes dans les liens
+                            ) for note in result['CVE Link'].split('\n') if note.strip()
                         ])
                     ], style={'flex': '1'}),
                     
@@ -177,7 +207,7 @@ def execute_search(n_clicks, n_submit, text_value, slider_value):
                                 href=link,
                                 target="_blank",
                                 className='link'
-                            ) for link in (result['Arxiv related'] if isinstance(result['Arxiv related'], list) else [])] # Ajout des liens d'articles
+                            ) for link in (result['Arxiv related'] if isinstance(result['Arxiv related'], list) else [])]
                             if result['Arxiv related'] != 'Aucun article'
                             else html.P("Aucun article trouvé", className='no-articles')
                         )
@@ -186,18 +216,16 @@ def execute_search(n_clicks, n_submit, text_value, slider_value):
             ], className='result-card')
             result_cards.append(card)
         
-        feedback = ""
-        return html.Div(result_cards), stats, stats_style, feedback
+        return html.Div(result_cards), stats, stats_style
         
-    except Exception as e: # Tratiement des erreurs
-        # Retour d'une bannière rouge avec l'erreur
+    except Exception as e:
         error_div = html.Div([
             html.Div(
                 f"Une erreur s'est produite: {str(e)}",
                 className='error-message'
             )
         ])
-        return error_div, "", {'display': 'none'}, "Une erreur s'est produite"
+        return error_div, "", {'display': 'none'}
 
 if __name__ == '__main__':
     app.run_server(debug=True)

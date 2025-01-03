@@ -1,11 +1,47 @@
-# Classe Arxiv inspirée de la correction en TD
-
 # =============== CLASSE CVE ===============
 
-class CVE:
+class NSTCVE:
     """
     @class CVE
-    @brief Cette classe régie le fonctionnement d'une CVE
+    @brief Cette classe régie le fonctionnement d'une CVE de l'api NST
+    
+    """
+
+    def __init__(self, cveID="", dateAdded="", notes="", shortDescription=""):
+        """
+        @brief Initialise l'objet CVE.
+
+        @param nom : Nom du corpus à définir.
+        @param cveID ("" par défaut) : Identifiant de la CVE.
+        @param dateAdded ("" par défaut) : Date d'ajout de la CVE.
+        @param notes ("" par défaut) : Notes concernant la CVE.
+        @param shortDescription ("" par défaut) : Description courte de la CVE.
+
+        Initialise l'objet NSTCVE.
+        """
+
+        # Initialisation des attributs
+        self.cveID = cveID
+        self.dateAdded = dateAdded
+        self.notes = notes
+        self.shortDescription = shortDescription
+            
+    def __str__(self):
+        """
+        @brief Donne une representation de l'objet CVE (son ID ainis que son nom de vulnérabilité)     
+        """
+        return f"CVE ID: {self.cveID}\nVulnerability Name: {self.shortDescription}"
+    
+    def getType(self):
+        """
+        @brief Donne le type de l'objet
+        """
+        return 'NSTCVE'
+
+class KevinCVE:
+    """
+    @class CVE
+    @brief Cette classe régie le fonctionnement d'une CVE de l'api Kevin
     
     """
 
@@ -22,9 +58,10 @@ class CVE:
         @param shortDescription ("" par défaut) : Description courte de la CVE.
         @param vulnerabilityName ("" par défaut) : Nom de la vulnérabilité.
 
-        Initialise l'objet CVE.
+        Initialise l'objet KevinCVE.
         """
 
+        # Initialisation des attributs
         self.cveID = cveID
         self.dateAdded = dateAdded
         self.notes = '\n'.join(notes.split(';'))
@@ -43,63 +80,10 @@ class CVE:
         """
         @brief Donne le type de l'objet
         """
-        return 'CVE'
+        return 'KevinCVE'
     
-# =============== CLASSE ARXIV ===============
-# Classe reprise de la correction des TDs
-
-class ArxivDocument:
-    """
-    @class CVE
-    @brief Cette classe régie le fonctionnement d'un document Arxiv
-    """
-
-    def __init__(self, titre="", auteur="", date="", url="", texte="",co_auteurs=""):
-        """
-        @brief Initialise la CVE.
-        
-        @param titre : Nom du corpus à definir.
-        @param auteur ("" par défaut) : Nom de l'auteur
-        @param date ("" par défaut) : Date de publication
-        @param url ("" par défaut) : Url
-        @param texte ("" par défaut) : Texte 
-        @param co_auteurs ("" par défaut) : Produit concenré par la CVE
-
-        Initialise l'objet Arxiv.
-        """
-
-        self.titre = titre  
-        self.auteur = auteur  
-        self.date = date  
-        self.url = url  
-        self.texte = texte  
-        self.co_auteurs = co_auteurs  
-
-    def getCoAuteurs(self):
-        """
-        @brief Retourne les auteurs  
-        """
-        return self.co_auteurs
-    
-    def setCoAuteurs(self,co_auteurs=0):
-        """
-        @brief Defini les co-auteurs
-        """
-        self.nbcom = co_auteurs
-
-    def __str__(self):
-        """
-        @brief Representation textuelle de l'objet  
-        """
-        return f"{self.titre}, par {self.auteur}, co-Auteurs : {self.co_auteurs}, source : {self.getType()}"
-
-    def getType(self):
-        """
-        @brief Donne le type de l'objet
-        """
-        return 'Arxiv'
-
 # =============== CLASSE SEARCH ENGINE ===============
+# Classe Search Engine inspirée du modèle développé lors des derniers TDs
 
 from scipy.sparse import csr_matrix
 import math
@@ -139,7 +123,7 @@ class SearchingEngine:
         self.ndoc = self.corpus.getNdoc() # Nombre de documents
         self.list_doc = self.corpus.getCve() # Liste des CVE
 
-        # Recuperation des textes
+        # Recuperation des descriptions
         for i in range (1,self.ndoc):
             __chaine = self.list_doc[i].shortDescription.split(' ')
             for word in __chaine:
@@ -215,7 +199,7 @@ class SearchingEngine:
         """
         return self.mat_TFIDF
 
-    def search(self, mots, nb):
+    def search(self, mots, nb, source, only_link):
         """
         @brief Fonction de recherche 
 
@@ -223,6 +207,8 @@ class SearchingEngine:
 
         @param mots : chaîne de caractères contenant les mots saisis par l'utilisateur pour la recherche
         @param nb : nombre de documents à retourner
+        @param source : contient la liste des sources choisies par l'utilisateur
+        @only_link : booléen representant le choix de l'utilisateur concenrant les articles scientifiques
 
         @return pd.DataFrame(res) : DataFrame des CVE les plus pertinents
 
@@ -231,9 +217,13 @@ class SearchingEngine:
         Ensuite, elle calcule le TF (Term Frequency) et l'IDF (Inverse Document Frequency) sur ce vecteur, puis normalise ce dernier.  
         La similarité cosinus est calculée entre le vecteur représentant les mots clés saisis par l'utilisateur et les vecteurs TFxIDF de chaque document.  
         Les similarités sont ensuite triées selon le score.  
-        Enfin, les documents les plus pertinents sont retournés en fonction des identifiants présents dans le vecteur de similarité calculée.
+        Ensuite, les documents les plus pertinents sont retournés en fonction des identifiants présents dans le vecteur de similarité calculée.
+        Enfin, on renvoie les cve seulement si elles correspondent aux filtres.
         """
         
+
+        print(source)
+
         mot_cles = mots.split(' ')
 
         vect = np.zeros(len(self.vocabulaire))
@@ -263,18 +253,48 @@ class SearchingEngine:
                 sim = np.dot(vect, idf_vect[i]) / norm(idf_vect[i]) # Calcul de la similarité cosinus
                 similarites.append((i, sim))
 
+        
         similarites.sort(key=lambda x: x[1], reverse=True) # Tri des resultats
 
         res = []
+       
 
+        # On parcours la liste des documents avec leurs similarités
         for id, score in similarites[:nb]:
-            res.append({
-                    'CVE ID': self.list_doc[id].cveID, 
-                    'Name': self.list_doc[id].vulnerabilityName,
-                    'Description': self.list_doc[id].shortDescription,
-                    'CVE Link': self.list_doc[id].notes,
-                    'Arxiv related': self.corpus.link[self.list_doc[id].cveID], # Recupération des liens aux articles arxiv correspondants
-                    'Score': score
-            })
+            
+            # Necessaire au bon fonctionnement quand le filtre n'est pas coché
+            valide = True
+            
+            # Si l'utilisateur à coché le filtre 'Liens trouvés uniquement'
+            if only_link:
+                # Si la liste la valeur des liens d'articles scientifiques est différente de 'Aucun article trouvé'
+                if self.corpus.link[self.list_doc[id].cveID] == 'Aucun article':
+                    valide = False # Le document est alors valide
+                
 
+            #Si la CVE provient de Kevin
+            if self.list_doc[id].getType() == 'KevinCVE' and 'Kevin' in source and valide:
+                res.append({
+                        'Source': 'Kevin API',
+                        'CVE ID': self.list_doc[id].cveID, 
+                        'Name': self.list_doc[id].vulnerabilityName,
+                        'Description': self.list_doc[id].shortDescription,
+                        'CVE Link': self.list_doc[id].notes,
+                        'Arxiv related': self.corpus.link[self.list_doc[id].cveID], # Recupération des liens aux articles arxiv correspondants
+                        'Score': score
+                })
+
+            #Si la CVE provient de NST
+            elif self.list_doc[id].getType() == 'NSTCVE' and 'NST' in source and valide: 
+                
+                res.append({
+                        'Source': 'NST API',
+                        'CVE ID': self.list_doc[id].cveID, 
+                        'Name': '',
+                        'Description': self.list_doc[id].shortDescription,
+                        'CVE Link': self.list_doc[id].notes,
+                        'Arxiv related': self.corpus.link[self.list_doc[id].cveID], # Recupération des liens aux articles arxiv correspondants
+                        'Score': score
+                })
+    
         return pd.DataFrame(res)

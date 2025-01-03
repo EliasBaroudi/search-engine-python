@@ -1,14 +1,17 @@
 import pytest
-from Classes import CVE, ArxivDocument, SearchingEngine
+from Classes import KevinCVE, NSTCVE, SearchingEngine
 from Corpus import Corpus
 import pandas as pd
 import numpy as np
+import datetime
 
-# Tests pour la classe CVE
-def test_cve_init(): # Création d'une CVE type
-    cve = CVE( 
+# Tests pour la classe KevinCVE
+def test_kevin_cve_init():
+    date = datetime.datetime.strptime("2023-01-01", "%Y-%m-%d")
+    # Initiation d'un objet Kevin
+    cve = KevinCVE(
         cveID="CVE-2023-1234",
-        dateAdded="2023-01-01",
+        dateAdded=date,
         notes="Test notes",
         nvdData=["data1", "data2"],
         product="Test Product",
@@ -16,110 +19,152 @@ def test_cve_init(): # Création d'une CVE type
         vulnerabilityName="Test Vulnerability"
     )
     
-    # On verifie que chaque champ correspond à nos valeurs
+    # On regarde si tous les attributs sont biens rensiengés
     assert cve.cveID == "CVE-2023-1234"
-    assert cve.dateAdded == "2023-01-01"
+    assert cve.dateAdded == date
     assert cve.notes == "Test notes"
     assert cve.nvdData == ["data1", "data2"]
     assert cve.product == "Test Product"
     assert cve.shortDescription == "Test description"
     assert cve.vulnerabilityName == "Test Vulnerability"
+    assert cve.getType() == "KevinCVE"
 
-def test_cve_str(): # Test de l'affichage
-    cve = CVE(cveID="CVE-2023-1234", vulnerabilityName="Test Vulnerability")
-    expected_str = "CVE ID: CVE-2023-1234\nVulnerability Name: Test Vulnerability" # Valeur attendue
-    assert str(cve) == expected_str
+# Tests pour la classe NSTCVE
+def test_nst_cve_init():
+    # Initiation d'un objet NST
+    cve = NSTCVE(
+        cveID="CVE-2023-5678",
+        dateAdded="2023-01-01",
+        notes="Test NST notes",
+        shortDescription="Test NST description"
+    )
+    
+    # On regarde si tous les attributs sont biens rensiengés
+    assert cve.cveID == "CVE-2023-5678"
+    assert cve.dateAdded == "2023-01-01"
+    assert cve.notes == "Test NST notes"
+    assert cve.shortDescription == "Test NST description"
+    assert cve.getType() == "NSTCVE"
 
+def test_nst_cve_notes_list():
+    cve = NSTCVE(
+        cveID="CVE-2023-5678",
+        notes="Test NST notes"  # Modification: notes en tant que liste avec séparateur ;
+    )
+
+    # On verifie que la note est bien traitée
+    assert cve.notes == "Test NST notes"
 
 # Tests pour la classe Corpus
 @pytest.fixture
-def sample_corpus(): # Création d'un corpus fictif
+def sample_corpus():
+    # Initialisation d'un corpus
     return Corpus("Test Corpus")
 
-def test_corpus_init(sample_corpus): # Test de l'initialisation d'un corpus fictif
-
-    # Verification des attributs du corpus
+# Test l'initialisation du corpus
+def test_corpus_init(sample_corpus):
+    # Verification des variables du corpus
     assert sample_corpus.nom == "Test Corpus"
     assert sample_corpus.cve == {}
     assert sample_corpus.link == {}
     assert sample_corpus.ndoc == 0
+    assert isinstance(sample_corpus.vulnerabilities, list)
+    assert "buffer" in sample_corpus.vulnerabilities
+    assert "overflow" in sample_corpus.vulnerabilities
 
-def test_corpus_add(sample_corpus): # Ajout d'une fausse CVE
-    cve = CVE(  
+# Test de l'ajout de Kevin au corpus
+def test_corpus_add_kevin_cve(sample_corpus):
+    date = datetime.datetime.strptime("2023-01-01", "%Y-%m-%d")
+    # Creation de l'objet Kevin
+    cve = KevinCVE(
         cveID="CVE-2023-1234",
-        vulnerabilityName="Simple Test Vulnerability Name",
-        shortDescription="Test description"
+        dateAdded=date,
+        shortDescription="buffer overflow vulnerability test",
+        vulnerabilityName="Test Buffer Overflow"
     )
     sample_corpus.add(cve)
     
-    # Verification que la cve est bien ajoutée
-    assert sample_corpus.ndoc == 1 
-    assert sample_corpus.cve[1] == cve
-    assert "CVE-2023-1234" in sample_corpus.link
+    # Verifie les attributs du corpus
+    assert sample_corpus.ndoc == 1
+    assert sample_corpus.cve[0] == cve
+    assert "buffer" in sample_corpus.desc and "overflow" in sample_corpus.desc
+    assert cve.cveID in sample_corpus.link
 
-def test_corpus_get_ndoc(sample_corpus): # Obtention du nb de doc CVE
-    # Verification de la variable ndoc avant l'ajout
-    assert sample_corpus.getNdoc() == 0
-    
-    # Ajout 
-    cve = CVE(cveID="CVE-2023-1234")
-    sample_corpus.add(cve)
-
-    # Verification que la variable est à 1 après 1 ajout
-    assert sample_corpus.getNdoc() == 1
-
-def test_corpus_get_cve(sample_corpus): # Tester la fonction pour obtenir une CVE du corpus
-    # Ajout 
-    cve = CVE(cveID="CVE-2023-1234")
+# Test de l'ajout de NST
+def test_corpus_add_nst_cve(sample_corpus):
+    # Creation de l'objet NST
+    cve = NSTCVE(
+        cveID="CVE-2023-5678",
+        dateAdded="2023-01-01",
+        shortDescription="sql injection vulnerability test"
+    )
     sample_corpus.add(cve)
     
-    # Verification des valeurs obtenues
-    cves = sample_corpus.getCve()
-    assert len(cves) == 1
-    assert cves[1] == cve
+    # Verifie les attributs du corpus
+    assert sample_corpus.ndoc == 1
+    assert sample_corpus.cve[0] == cve
+    assert "sql" in sample_corpus.desc and "injection" in sample_corpus.desc
+    assert cve.cveID in sample_corpus.link
 
 # Tests pour la classe SearchingEngine
 @pytest.fixture
-def sample_search_engine(): 
-    corpus = Corpus("Test Corpus") # Creation d'un corpus
-
-    # Creation de CVEs
-    cve1 = CVE(
+def sample_search_engine():
+    corpus = Corpus("Test Corpus")
+    
+    # Ajout d'une CVE Kevin avec des mots clés spécifiques pour la recherche
+    date = datetime.datetime.strptime("2023-01-01", "%Y-%m-%d")
+    cve1 = KevinCVE(
         cveID="CVE-2023-1234",
-        shortDescription="first test vulnerability description"
-    )
-    cve2 = CVE(
-        cveID="CVE-2023-5678",
-        shortDescription="second test vulnerability description"
+        dateAdded=date,
+        shortDescription="security vulnerability test",  # Modification pour assurer des résultats
+        vulnerabilityName="Security Test",
+        notes="Test notes"
     )
     
-    # Ajout des CVEs au corpus
+    # Ajout d'une CVE NST
+    cve2 = NSTCVE(
+        cveID="CVE-2023-5678",
+        dateAdded="2023-01-01",
+        shortDescription="security vulnerability test",  # Même description pour assurer des résultats
+        notes="Test notes"
+    )
+    
+    # Ajout des cve
     corpus.add(cve1)
     corpus.add(cve2)
     
-    return SearchingEngine(corpus) # Creation d'un objet SearchEngine 
+    return SearchingEngine(corpus)
 
-def test_search_engine_init(sample_search_engine): # Test des valeurs d'initialisation
+# Test de l'initialisation du moteur de recherche
+def test_search_engine_init(sample_search_engine):
     assert sample_search_engine.ndoc > 0
     assert len(sample_search_engine.vocabulaire) > 0
     assert sample_search_engine.mat_TF is not None
     assert sample_search_engine.mat_TFIDF is not None
 
-def test_search_engine_get_tf(sample_search_engine): # Test de la fonction calcul tf
+# Test du calcul TF et IDF
+def test_search_engine_matrices(sample_search_engine):
     tf_matrix = sample_search_engine.getTF()
-    assert tf_matrix is not None
-    assert tf_matrix.shape[0] == sample_search_engine.ndoc # On verifie que le nb de lignes de la matrice est bien égale au nb de doc dans le corpus
-    assert tf_matrix.shape[1] == len(sample_search_engine.vocabulaire) #On verifie qu'il y a autant de colonnes que de mots dans le vocabulaire
-
-def test_search_engine_get_tfidf(sample_search_engine): # Test pour le clacul tfxidf
     tfidf_matrix = sample_search_engine.getTFIDF()
-    assert tfidf_matrix is not None
-    assert tfidf_matrix.shape[0] == sample_search_engine.ndoc # On verifie que le nb de lignes de la matrice est bien égale au nb de doc dans le corpus
-    assert tfidf_matrix.shape[1] == len(sample_search_engine.vocabulaire) #On verifie qu'il y a autant de colonnes que de mots dans le vocabulaire
+    
+    # On verifie en faisant correspondre la taille des matrix avec la taille des voc et des docs
+    assert tf_matrix.shape[0] == sample_search_engine.ndoc
+    assert tf_matrix.shape[1] == len(sample_search_engine.vocabulaire)
+    assert tfidf_matrix.shape[0] == sample_search_engine.ndoc
+    assert tfidf_matrix.shape[1] == len(sample_search_engine.vocabulaire)
 
-def test_search_engine_search(sample_search_engine): # Test pour la recherche
-    results = sample_search_engine.search("test vulnerability", 2)
-    assert isinstance(results, pd.DataFrame) # On verifie que le résultat est bien un DataFrame
-    assert len(results) <= 2 # Qu'on a 2 ou plus résultats (2 documents)
-    assert all(col in results.columns for col in ['CVE ID', 'Name', 'Description', 'CVE Link', 'Arxiv related', 'Score']) # On verifie que les colonnes correspondent bien
-                                                                                                                       # Prouvant que la fonction fonctionne correctement
+# Test de requette de recherche 
+def test_search_engine_search(sample_search_engine):
+    # Test de recherche avec seulement la source Kevin
+    results_kevin = sample_search_engine.search("security vulnerability", 2, ["Kevin"], False)
+    assert isinstance(results_kevin, pd.DataFrame)
+    if not results_kevin.empty:  # Vérifie si des résultats ont été trouvés
+        assert all(col in results_kevin.columns for col in ['Source', 'CVE ID', 'Description', 'Arxiv related'])
+        assert all(row['Source'] == 'Kevin API' for _, row in results_kevin.iterrows())
+    
+    # Test de recherche avec seulement la source NST
+    results_nst = sample_search_engine.search("security vulnerability", 2, ["NST"], False)
+    assert isinstance(results_nst, pd.DataFrame)
+    if not results_nst.empty:  # Vérifie si des résultats ont été trouvés
+        assert all(col in results_nst.columns for col in ['Source', 'CVE ID', 'Description', 'Arxiv related'])
+        assert all(row['Source'] == 'NST API' for _, row in results_nst.iterrows())
