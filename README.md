@@ -18,6 +18,7 @@ Le projet a été réalisé dans le cadre de l'enseignement de spécialité Pyth
 - Recherche de CVE (Common Vulnerabilities and Exposures)
 - Recherche d'articles scientifiques associés
 - Utilisation des calculs TF-IDF (Term Frequency-Inverse Document Frequency) pour fournir des résultats pertinents
+- Filtrage des résultats en fonction des préférences
 
 ---
 
