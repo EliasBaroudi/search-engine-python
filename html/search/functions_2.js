@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['getcve_24',['getCve',['../classCorpus_1_1Corpus.html#a5039037638fc8d53892d3118164aacd6',1,'Corpus::Corpus']]],
-  ['getndoc_25',['getNdoc',['../classCorpus_1_1Corpus.html#a6bbddbd246a97849f8f9e7edeba77e36',1,'Corpus::Corpus']]],
-  ['gettf_26',['getTF',['../classClasses_1_1SearchingEngine.html#a274d262565f274ca3bae5fbb7b967acd',1,'Classes::SearchingEngine']]],
-  ['gettfidf_27',['getTFIDF',['../classClasses_1_1SearchingEngine.html#a56574f8d340e0cdf414f44b7b466ca95',1,'Classes::SearchingEngine']]],
-  ['gettype_28',['getType',['../classClasses_1_1NSTCVE.html#a842b8210dbd6baa7343bddb26e7ace42',1,'Classes.NSTCVE.getType()'],['../classClasses_1_1KevinCVE.html#a214a1f4568180f001b5aad7247fa0367',1,'Classes.KevinCVE.getType()']]]
+  ['getcve_0',['getCve',['../classCorpus_1_1Corpus.html#a953463479ae5e9ecd4a9e4b0f3293200',1,'Corpus::Corpus']]],
+  ['getndoc_1',['getNdoc',['../classCorpus_1_1Corpus.html#af0e7b02b3d4bea9714dbb4f68cb0554f',1,'Corpus::Corpus']]],
+  ['gettf_2',['getTF',['../classClasses_1_1SearchingEngine.html#a8a5291bcffbd152a61a66a4cc2dab461',1,'Classes::SearchingEngine']]],
+  ['gettfidf_3',['getTFIDF',['../classClasses_1_1SearchingEngine.html#a2bd73c62e57e507d45e4cd44328d5630',1,'Classes::SearchingEngine']]],
+  ['gettype_4',['gettype',['../classClasses_1_1NSTCVE.html#a98041042694f3267b178f5d8dffec0da',1,'Classes.NSTCVE.getType()'],['../classClasses_1_1KevinCVE.html#a32fc24a00fcedefe89429477cc55805b',1,'Classes.KevinCVE.getType()']]]
 ];
